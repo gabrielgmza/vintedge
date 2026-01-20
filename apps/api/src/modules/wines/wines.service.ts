@@ -286,29 +286,39 @@ export class WinesService {
     // Base wine price will be added by caller after fetching from DB
 
     // Bottle customization
-    breakdown.bottleShape = BOTTLE_PRICES.shape[input.bottle.shape] || 0;
-    breakdown.bottleColor = BOTTLE_PRICES.color[input.bottle.color] || 0;
-    breakdown.bottleCapacity =
-      BOTTLE_PRICES.capacity[input.bottle.capacity.toString()] || 0;
+    const shapePrice = BOTTLE_PRICES.shape[input.bottle.shape];
+    breakdown.bottleShape = shapePrice !== undefined ? shapePrice : 0;
+    
+    const colorPrice = BOTTLE_PRICES.color[input.bottle.color];
+    breakdown.bottleColor = colorPrice !== undefined ? colorPrice : 0;
+    
+    const capacityPrice = BOTTLE_PRICES.capacity[input.bottle.capacity.toString()];
+    breakdown.bottleCapacity = capacityPrice !== undefined ? capacityPrice : 0;
 
     // Cork customization
-    breakdown.cork = CORK_PRICES[input.cork.type] || 0;
+    const corkPrice = CORK_PRICES[input.cork.type];
+    breakdown.cork = corkPrice !== undefined ? corkPrice : 0;
     if (input.cork.engraving) {
       breakdown.corkEngraving = EXTRAS_PRICES.corkEngraving;
     }
 
     // Capsule customization
-    breakdown.capsule = CAPSULE_PRICES[input.capsule.type] || 0;
+    const capsulePrice = CAPSULE_PRICES[input.capsule.type];
+    breakdown.capsule = capsulePrice !== undefined ? capsulePrice : 0;
 
     // Label customization
-    breakdown.labelMaterial = LABEL_PRICES.material[input.label.material] || 0;
-    breakdown.labelShape = LABEL_PRICES.shape[input.label.shape] || 0;
+    const labelMaterialPrice = LABEL_PRICES.material[input.label.material];
+    breakdown.labelMaterial = labelMaterialPrice !== undefined ? labelMaterialPrice : 0;
+    
+    const labelShapePrice = LABEL_PRICES.shape[input.label.shape];
+    breakdown.labelShape = labelShapePrice !== undefined ? labelShapePrice : 0;
     if (input.label.hasCustomImage) {
       breakdown.customImage = EXTRAS_PRICES.customImage;
     }
 
     // Packaging customization
-    breakdown.packaging = PACKAGING_PRICES[input.packaging.type] || 0;
+    const packagingPrice = PACKAGING_PRICES[input.packaging.type];
+    breakdown.packaging = packagingPrice !== undefined ? packagingPrice : 0;
     if (input.packaging.engraving) {
       breakdown.packagingEngraving = EXTRAS_PRICES.packagingEngraving;
     }

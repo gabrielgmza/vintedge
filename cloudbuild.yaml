@@ -87,6 +87,8 @@ steps:
       - '80'
       - '--timeout'
       - '60s'
+      - '--port'
+      - '8080'
 
 # Substitutions (override in trigger configuration)
 substitutions:
