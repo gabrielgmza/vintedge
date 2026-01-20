@@ -4,10 +4,10 @@
  * @module modules/auth/auth.service
  */
 
-import { Injectable, Logger, UnauthorizedException, ConflictException } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { PrismaService } from '../../database/prisma.service';
 import { FirebaseAdminService } from './firebase-admin.service';
-import type { User, CreateUserInput, AuthProvider, SupportedLanguage, SupportedCountry } from '@vintedge/shared';
+import type { User, AuthProvider, SupportedLanguage, SupportedCountry } from '@vintedge/shared';
 
 interface RegisterUserDto {
   firebaseUid: string;

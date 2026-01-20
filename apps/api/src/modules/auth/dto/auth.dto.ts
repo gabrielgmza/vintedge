@@ -11,11 +11,11 @@ import type { AuthProvider, SupportedLanguage, SupportedCountry } from '@vintedg
 export class RegisterDto {
   @ApiProperty({ description: 'Firebase user UID' })
   @IsString()
-  firebaseUid: string;
+  firebaseUid!: string;
 
   @ApiProperty({ description: 'User email address' })
   @IsEmail()
-  email: string;
+  email!: string;
 
   @ApiPropertyOptional({ description: 'Display name' })
   @IsOptional()
@@ -29,7 +29,7 @@ export class RegisterDto {
 
   @ApiProperty({ description: 'Authentication provider', enum: ['email', 'google', 'facebook', 'apple'] })
   @IsIn(['email', 'google', 'facebook', 'apple'])
-  authProvider: AuthProvider;
+  authProvider!: AuthProvider;
 
   @ApiPropertyOptional({ description: 'Preferred language', enum: ['en', 'es', 'pt', 'hi', 'ja'] })
   @IsOptional()
@@ -45,11 +45,11 @@ export class RegisterDto {
 export class VerifyAgeDto {
   @ApiProperty({ description: 'User confirms they are of legal drinking age' })
   @IsBoolean()
-  confirmed: boolean;
+  confirmed!: boolean;
 }
 
 export class RefreshTokenDto {
   @ApiProperty({ description: 'Firebase refresh token' })
   @IsString()
-  refreshToken: string;
+  refreshToken!: string;
 }

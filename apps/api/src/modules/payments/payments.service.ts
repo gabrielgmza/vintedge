@@ -13,7 +13,7 @@ import {
 import { ConfigService } from '@nestjs/config';
 import Stripe from 'stripe';
 import { PrismaService } from '../../database/prisma.service';
-import { OrderStatus, PaymentStatus } from '@prisma/client';
+import { OrderStatus } from '@prisma/client';
 
 export interface CreatePaymentIntentInput {
   orderId: string;

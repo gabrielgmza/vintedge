@@ -6,7 +6,6 @@
 
 import {
   Injectable,
-  Logger,
   NotFoundException,
   BadRequestException,
 } from '@nestjs/common';
@@ -145,8 +144,6 @@ const VOLUME_DISCOUNTS: { minQuantity: number; discount: number }[] = [
 
 @Injectable()
 export class WinesService {
-  private readonly logger = new Logger(WinesService.name);
-
   constructor(private readonly prisma: PrismaService) {}
 
   /**
@@ -286,39 +283,28 @@ export class WinesService {
     // Base wine price will be added by caller after fetching from DB
 
     // Bottle customization
-    const shapePrice = BOTTLE_PRICES.shape[input.bottle.shape];
-    breakdown.bottleShape = shapePrice !== undefined ? shapePrice : 0;
-    
-    const colorPrice = BOTTLE_PRICES.color[input.bottle.color];
-    breakdown.bottleColor = colorPrice !== undefined ? colorPrice : 0;
-    
-    const capacityPrice = BOTTLE_PRICES.capacity[input.bottle.capacity.toString()];
-    breakdown.bottleCapacity = capacityPrice !== undefined ? capacityPrice : 0;
+    breakdown.bottleShape = BOTTLE_PRICES['shape']?.[input.bottle.shape] ?? 0;
+    breakdown.bottleColor = BOTTLE_PRICES['color']?.[input.bottle.color] ?? 0;
+    breakdown.bottleCapacity = BOTTLE_PRICES['capacity']?.[input.bottle.capacity.toString()] ?? 0;
 
     // Cork customization
-    const corkPrice = CORK_PRICES[input.cork.type];
-    breakdown.cork = corkPrice !== undefined ? corkPrice : 0;
+    breakdown.cork = CORK_PRICES[input.cork.type] ?? 0;
     if (input.cork.engraving) {
       breakdown.corkEngraving = EXTRAS_PRICES.corkEngraving;
     }
 
     // Capsule customization
-    const capsulePrice = CAPSULE_PRICES[input.capsule.type];
-    breakdown.capsule = capsulePrice !== undefined ? capsulePrice : 0;
+    breakdown.capsule = CAPSULE_PRICES[input.capsule.type] ?? 0;
 
     // Label customization
-    const labelMaterialPrice = LABEL_PRICES.material[input.label.material];
-    breakdown.labelMaterial = labelMaterialPrice !== undefined ? labelMaterialPrice : 0;
-    
-    const labelShapePrice = LABEL_PRICES.shape[input.label.shape];
-    breakdown.labelShape = labelShapePrice !== undefined ? labelShapePrice : 0;
+    breakdown.labelMaterial = LABEL_PRICES['material']?.[input.label.material] ?? 0;
+    breakdown.labelShape = LABEL_PRICES['shape']?.[input.label.shape] ?? 0;
     if (input.label.hasCustomImage) {
       breakdown.customImage = EXTRAS_PRICES.customImage;
     }
 
     // Packaging customization
-    const packagingPrice = PACKAGING_PRICES[input.packaging.type];
-    breakdown.packaging = packagingPrice !== undefined ? packagingPrice : 0;
+    breakdown.packaging = PACKAGING_PRICES[input.packaging.type] ?? 0;
     if (input.packaging.engraving) {
       breakdown.packagingEngraving = EXTRAS_PRICES.packagingEngraving;
     }

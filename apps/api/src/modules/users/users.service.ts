@@ -8,7 +8,6 @@ import {
   Injectable,
   Logger,
   NotFoundException,
-  ConflictException,
 } from '@nestjs/common';
 import { PrismaService } from '../../database/prisma.service';
 import { Prisma, User, UserAddress } from '@prisma/client';

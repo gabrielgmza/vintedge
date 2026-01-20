@@ -63,14 +63,14 @@ import { HealthModule } from './modules/health/health.module';
           remove: true,
         },
         serializers: {
-          req: (req) => ({
+          req: (req: { id: string; method: string; url: string; query: unknown; remoteAddress: string }) => ({
             id: req.id,
             method: req.method,
             url: req.url,
             query: req.query,
             remoteAddress: req.remoteAddress,
           }),
-          res: (res) => ({
+          res: (res: { statusCode: number }) => ({
             statusCode: res.statusCode,
           }),
         },

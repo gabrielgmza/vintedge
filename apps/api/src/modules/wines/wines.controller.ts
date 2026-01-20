@@ -11,22 +11,18 @@ import {
   Body,
   Param,
   Query,
-  UseGuards,
   HttpCode,
   HttpStatus,
 } from '@nestjs/common';
 import {
   ApiTags,
-  ApiBearerAuth,
   ApiOperation,
   ApiResponse,
   ApiParam,
   ApiQuery,
 } from '@nestjs/swagger';
 import { WineType, WineClassification } from '@prisma/client';
-import { FirebaseAuthGuard } from '../auth/guards/firebase-auth.guard';
 import { Public } from '../auth/decorators/public.decorator';
-import { CurrentUser } from '../auth/decorators/current-user.decorator';
 import {
   WinesService,
   WineFilters,
