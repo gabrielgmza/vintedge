@@ -1,0 +1,585 @@
+// ============================================
+// VINTEDGE - Prisma Schema
+// PostgreSQL Database (Cloud SQL)
+// ============================================
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ============================================
+// USERS & AUTHENTICATION
+// ============================================
+
+model User {
+  id              String    @id @default(cuid())
+  firebaseUid     String    @unique @map("firebase_uid")
+  email           String    @unique
+  emailVerified   Boolean   @default(false) @map("email_verified")
+  displayName     String?   @map("display_name")
+  photoUrl        String?   @map("photo_url")
+  phoneNumber     String?   @map("phone_number")
+  role            UserRole  @default(CUSTOMER)
+  authProvider    AuthProvider @default(EMAIL) @map("auth_provider")
+  
+  // Age verification
+  ageVerified     Boolean   @default(false) @map("age_verified")
+  ageVerifiedAt   DateTime? @map("age_verified_at")
+  
+  // Preferences (JSON)
+  preferences     Json      @default("{}")
+  
+  // Status
+  isActive        Boolean   @default(true) @map("is_active")
+  lastLoginAt     DateTime? @map("last_login_at")
+  
+  // Timestamps
+  createdAt       DateTime  @default(now()) @map("created_at")
+  updatedAt       DateTime  @updatedAt @map("updated_at")
+
+  // Relations
+  addresses       UserAddress[]
+  orders          Order[]
+  customizations  Customization[]
+  cartItems       CartItem[]
+  auditLogs       AuditLog[]
+
+  @@index([email])
+  @@index([firebaseUid])
+  @@map("users")
+}
+
+enum UserRole {
+  CUSTOMER
+  ADMIN
+  SUPPORT
+  PRODUCTION
+}
+
+enum AuthProvider {
+  EMAIL
+  GOOGLE
+  FACEBOOK
+  APPLE
+}
+
+model UserAddress {
+  id              String    @id @default(cuid())
+  userId          String    @map("user_id")
+  label           String    @default("Home")
+  fullName        String    @map("full_name")
+  addressLine1    String    @map("address_line_1")
+  addressLine2    String?   @map("address_line_2")
+  city            String
+  state           String
+  postalCode      String    @map("postal_code")
+  country         String    @db.VarChar(2) // ISO country code
+  phoneNumber     String    @map("phone_number")
+  isDefault       Boolean   @default(false) @map("is_default")
+  
+  createdAt       DateTime  @default(now()) @map("created_at")
+  updatedAt       DateTime  @updatedAt @map("updated_at")
+
+  // Relations
+  user            User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  orders          Order[]
+
+  @@index([userId])
+  @@map("user_addresses")
+}
+
+// ============================================
+// WINE CATALOG
+// ============================================
+
+model Wine {
+  id              String    @id @default(cuid())
+  sku             String    @unique
+  name            String
+  type            WineType
+  region          String
+  classification  WineClassification
+  grapeVarieties  String[]  @map("grape_varieties")
+  vintage         Int?
+  
+  // Characteristics (JSON)
+  characteristics Json      @default("{}")
+  
+  // Tasting notes (JSON)
+  tastingNotes    Json      @map("tasting_notes") @default("{}")
+  
+  // Ratings (JSON)
+  ratings         Json      @default("{}")
+  
+  // Pricing (in cents)
+  basePrice       Int       @map("base_price")
+  
+  // Media
+  imageUrls       String[]  @map("image_urls")
+  
+  // Availability
+  isAvailable     Boolean   @default(true) @map("is_available")
+  stockQuantity   Int       @default(0) @map("stock_quantity")
+  
+  // Customization options (JSON)
+  customizationOptions Json @map("customization_options") @default("{}")
+  
+  // Restricted countries (ISO codes)
+  restrictedCountries String[] @map("restricted_countries")
+  
+  createdAt       DateTime  @default(now()) @map("created_at")
+  updatedAt       DateTime  @updatedAt @map("updated_at")
+
+  // Relations
+  customizations  Customization[]
+
+  @@index([type])
+  @@index([region])
+  @@index([isAvailable])
+  @@map("wines")
+}
+
+enum WineType {
+  RED
+  WHITE
+  ROSE
+  SPARKLING
+  DESSERT
+}
+
+enum WineClassification {
+  JOVEN
+  CRIANZA
+  RESERVA
+  GRAN_RESERVA
+  PREMIUM
+}
+
+// ============================================
+// CUSTOMIZATIONS
+// ============================================
+
+model Customization {
+  id              String    @id @default(cuid())
+  userId          String    @map("user_id")
+  wineId          String    @map("wine_id")
+  status          CustomizationStatus @default(DRAFT)
+  
+  // Customization details (JSON)
+  bottle          Json      @default("{}")
+  cork            Json      @default("{}")
+  capsule         Json      @default("{}")
+  label           Json      @default("{}")
+  packaging       Json      @default("{}")
+  
+  // Pricing (in cents)
+  unitPrice       Int       @map("unit_price")
+  quantity        Int       @default(1)
+  totalPrice      Int       @map("total_price")
+  
+  // Preview images
+  previewUrls     String[]  @map("preview_urls")
+  
+  notes           String?
+  
+  savedAt         DateTime? @map("saved_at")
+  createdAt       DateTime  @default(now()) @map("created_at")
+  updatedAt       DateTime  @updatedAt @map("updated_at")
+
+  // Relations
+  user            User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  wine            Wine      @relation(fields: [wineId], references: [id])
+  orderItems      OrderItem[]
+  cartItems       CartItem[]
+
+  @@index([userId])
+  @@index([wineId])
+  @@index([status])
+  @@map("customizations")
+}
+
+enum CustomizationStatus {
+  DRAFT
+  SAVED
+  IN_CART
+  ORDERED
+  IN_PRODUCTION
+  COMPLETED
+}
+
+// ============================================
+// CART
+// ============================================
+
+model CartItem {
+  id              String    @id @default(cuid())
+  userId          String    @map("user_id")
+  customizationId String    @map("customization_id")
+  quantity        Int       @default(1)
+  
+  addedAt         DateTime  @default(now()) @map("added_at")
+  updatedAt       DateTime  @updatedAt @map("updated_at")
+
+  // Relations
+  user            User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  customization   Customization @relation(fields: [customizationId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, customizationId])
+  @@index([userId])
+  @@map("cart_items")
+}
+
+// ============================================
+// ORDERS & PAYMENTS
+// ============================================
+
+model Order {
+  id              String    @id @default(cuid())
+  orderNumber     String    @unique @map("order_number")
+  userId          String    @map("user_id")
+  status          OrderStatus @default(PENDING_PAYMENT)
+  
+  // Shipping
+  shippingAddressId String? @map("shipping_address_id")
+  shippingMethod  ShippingMethod @map("shipping_method")
+  shippingInfo    Json      @map("shipping_info") @default("{}")
+  
+  // Payment
+  paymentInfo     Json      @map("payment_info") @default("{}")
+  
+  // Pricing (all in cents)
+  subtotal        Int
+  shippingCost    Int       @map("shipping_cost")
+  taxAmount       Int       @map("tax_amount")
+  discountAmount  Int       @default(0) @map("discount_amount")
+  totalAmount     Int       @map("total_amount")
+  
+  // Promo
+  promoCode       String?   @map("promo_code")
+  
+  // Notes
+  notes           String?
+  internalNotes   String?   @map("internal_notes")
+  
+  // Timestamps
+  createdAt       DateTime  @default(now()) @map("created_at")
+  updatedAt       DateTime  @updatedAt @map("updated_at")
+  paidAt          DateTime? @map("paid_at")
+  shippedAt       DateTime? @map("shipped_at")
+  deliveredAt     DateTime? @map("delivered_at")
+  cancelledAt     DateTime? @map("cancelled_at")
+
+  // Relations
+  user            User      @relation(fields: [userId], references: [id])
+  shippingAddress UserAddress? @relation(fields: [shippingAddressId], references: [id])
+  items           OrderItem[]
+  events          OrderEvent[]
+  invoice         Invoice?
+
+  @@index([userId])
+  @@index([status])
+  @@index([orderNumber])
+  @@index([createdAt])
+  @@map("orders")
+}
+
+enum OrderStatus {
+  PENDING_PAYMENT
+  PAYMENT_FAILED
+  PAID
+  PROCESSING
+  IN_PRODUCTION
+  QUALITY_CHECK
+  READY_TO_SHIP
+  SHIPPED
+  IN_TRANSIT
+  DELIVERED
+  CANCELLED
+  REFUNDED
+}
+
+enum ShippingMethod {
+  STANDARD
+  EXPRESS
+  OVERNIGHT
+}
+
+model OrderItem {
+  id              String    @id @default(cuid())
+  orderId         String    @map("order_id")
+  customizationId String    @map("customization_id")
+  
+  quantity        Int
+  unitPrice       Int       @map("unit_price")
+  totalPrice      Int       @map("total_price")
+  
+  // Pricing breakdown (JSON)
+  pricingBreakdown Json     @map("pricing_breakdown") @default("{}")
+  
+  // Production status
+  productionStatus ProductionStatus @default(PENDING) @map("production_status")
+  
+  createdAt       DateTime  @default(now()) @map("created_at")
+
+  // Relations
+  order           Order     @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  customization   Customization @relation(fields: [customizationId], references: [id])
+
+  @@index([orderId])
+  @@map("order_items")
+}
+
+enum ProductionStatus {
+  PENDING
+  LABEL_PRINTING
+  BOTTLING
+  CORKING
+  LABELING
+  PACKAGING
+  QUALITY_CHECK
+  READY
+}
+
+model OrderEvent {
+  id              String    @id @default(cuid())
+  orderId         String    @map("order_id")
+  type            OrderEventType
+  
+  previousStatus  OrderStatus? @map("previous_status")
+  newStatus       OrderStatus? @map("new_status")
+  
+  metadata        Json      @default("{}")
+  
+  performedBy     String    @map("performed_by")
+  performedByRole String    @map("performed_by_role")
+  
+  ipAddress       String?   @map("ip_address")
+  userAgent       String?   @map("user_agent")
+  
+  createdAt       DateTime  @default(now()) @map("created_at")
+
+  // Relations
+  order           Order     @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+  @@index([orderId])
+  @@index([type])
+  @@index([createdAt])
+  @@map("order_events")
+}
+
+enum OrderEventType {
+  CREATED
+  PAYMENT_INITIATED
+  PAYMENT_SUCCEEDED
+  PAYMENT_FAILED
+  STATUS_CHANGED
+  PRODUCTION_STARTED
+  PRODUCTION_COMPLETED
+  SHIPPED
+  DELIVERED
+  CANCELLED
+  REFUND_INITIATED
+  REFUND_COMPLETED
+  NOTE_ADDED
+}
+
+// ============================================
+// INVOICING
+// ============================================
+
+model Invoice {
+  id              String    @id @default(cuid())
+  invoiceNumber   String    @unique @map("invoice_number")
+  orderId         String    @unique @map("order_id")
+  userId          String    @map("user_id")
+  
+  // Billing address (JSON)
+  billingAddress  Json      @map("billing_address")
+  
+  // Line items (JSON)
+  lineItems       Json      @map("line_items")
+  
+  // Amounts (in cents)
+  subtotal        Int
+  taxRate         Decimal   @map("tax_rate") @db.Decimal(5, 4)
+  taxAmount       Int       @map("tax_amount")
+  discountAmount  Int       @default(0) @map("discount_amount")
+  shippingAmount  Int       @map("shipping_amount")
+  totalAmount     Int       @map("total_amount")
+  
+  currency        String    @default("usd") @db.VarChar(3)
+  status          InvoiceStatus @default(DRAFT)
+  
+  pdfUrl          String?   @map("pdf_url")
+  
+  issuedAt        DateTime  @map("issued_at")
+  dueAt           DateTime  @map("due_at")
+  paidAt          DateTime? @map("paid_at")
+  
+  createdAt       DateTime  @default(now()) @map("created_at")
+  updatedAt       DateTime  @updatedAt @map("updated_at")
+
+  // Relations
+  order           Order     @relation(fields: [orderId], references: [id])
+
+  @@index([userId])
+  @@index([status])
+  @@map("invoices")
+}
+
+enum InvoiceStatus {
+  DRAFT
+  ISSUED
+  PAID
+  VOID
+}
+
+// ============================================
+// LABEL TEMPLATES
+// ============================================
+
+model LabelTemplate {
+  id              String    @id @default(cuid())
+  name            String
+  category        TemplateCategory
+  thumbnailUrl    String    @map("thumbnail_url")
+  previewUrl      String    @map("preview_url")
+  
+  // Design data (JSON)
+  design          Json
+  
+  isPremium       Boolean   @default(false) @map("is_premium")
+  usageCount      Int       @default(0) @map("usage_count")
+  
+  isActive        Boolean   @default(true) @map("is_active")
+  
+  createdAt       DateTime  @default(now()) @map("created_at")
+  updatedAt       DateTime  @updatedAt @map("updated_at")
+
+  @@index([category])
+  @@index([isActive])
+  @@map("label_templates")
+}
+
+enum TemplateCategory {
+  WEDDING
+  ANNIVERSARY
+  BIRTHDAY
+  CORPORATE
+  HOLIDAY
+  CLASSIC
+  MODERN
+  ARTISTIC
+}
+
+// ============================================
+// PRICING RULES
+// ============================================
+
+model PricingRule {
+  id              String    @id @default(cuid())
+  name            String
+  type            PricingRuleType
+  
+  // Conditions and modifiers (JSON)
+  conditions      Json      @default("{}")
+  modifier        Json      // { type: 'fixed' | 'percentage', value: number }
+  
+  priority        Int       @default(0)
+  isActive        Boolean   @default(true) @map("is_active")
+  
+  validFrom       DateTime? @map("valid_from")
+  validTo         DateTime? @map("valid_to")
+  
+  createdAt       DateTime  @default(now()) @map("created_at")
+  updatedAt       DateTime  @updatedAt @map("updated_at")
+
+  @@index([type])
+  @@index([isActive])
+  @@map("pricing_rules")
+}
+
+enum PricingRuleType {
+  BOTTLE
+  CORK
+  CAPSULE
+  LABEL
+  PACKAGING
+  VOLUME_DISCOUNT
+  PROMO_CODE
+  SHIPPING
+}
+
+// ============================================
+// PROMO CODES
+// ============================================
+
+model PromoCode {
+  id              String    @id @default(cuid())
+  code            String    @unique
+  description     String?
+  
+  discountType    DiscountType @map("discount_type")
+  discountValue   Int       @map("discount_value") // cents for FIXED, basis points for PERCENTAGE
+  
+  minOrderAmount  Int?      @map("min_order_amount")
+  maxDiscount     Int?      @map("max_discount")
+  
+  usageLimit      Int?      @map("usage_limit")
+  usageCount      Int       @default(0) @map("usage_count")
+  perUserLimit    Int       @default(1) @map("per_user_limit")
+  
+  validFrom       DateTime  @map("valid_from")
+  validTo         DateTime  @map("valid_to")
+  
+  isActive        Boolean   @default(true) @map("is_active")
+  
+  createdAt       DateTime  @default(now()) @map("created_at")
+  updatedAt       DateTime  @updatedAt @map("updated_at")
+
+  @@index([code])
+  @@index([isActive])
+  @@map("promo_codes")
+}
+
+enum DiscountType {
+  FIXED
+  PERCENTAGE
+}
+
+// ============================================
+// AUDIT LOGS (Security/Compliance)
+// ============================================
+
+model AuditLog {
+  id              String    @id @default(cuid())
+  userId          String?   @map("user_id")
+  action          String
+  resource        String
+  resourceId      String?   @map("resource_id")
+  
+  // Changes (JSON)
+  oldValue        Json?     @map("old_value")
+  newValue        Json?     @map("new_value")
+  
+  ipAddress       String?   @map("ip_address")
+  userAgent       String?   @map("user_agent")
+  
+  metadata        Json      @default("{}")
+  
+  createdAt       DateTime  @default(now()) @map("created_at")
+
+  // Relations
+  user            User?     @relation(fields: [userId], references: [id])
+
+  @@index([userId])
+  @@index([action])
+  @@index([resource])
+  @@index([createdAt])
+  @@map("audit_logs")
+}

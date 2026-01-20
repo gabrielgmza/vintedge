@@ -1,0 +1,26 @@
+{
+  "name": "@vintedge/database",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Vintedge Database - Prisma schemas and migrations",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "generate": "prisma generate",
+    "migrate": "prisma migrate deploy",
+    "migrate:dev": "prisma migrate dev",
+    "migrate:reset": "prisma migrate reset",
+    "seed": "ts-node prisma/seed.ts",
+    "studio": "prisma studio",
+    "format": "prisma format"
+  },
+  "dependencies": {
+    "@prisma/client": "^5.9.0"
+  },
+  "devDependencies": {
+    "prisma": "^5.9.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.0"
+  }
+}
