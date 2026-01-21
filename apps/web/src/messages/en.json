@@ -1,0 +1,183 @@
+{
+  "common": {
+    "home": "Home",
+    "wines": "Wines",
+    "about": "About",
+    "contact": "Contact",
+    "customize": "Customize",
+    "cart": "Cart",
+    "account": "My Account",
+    "signIn": "Sign In",
+    "signUp": "Sign Up",
+    "signOut": "Sign Out",
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "cancel": "Cancel",
+    "save": "Save",
+    "delete": "Delete",
+    "edit": "Edit",
+    "view": "View",
+    "search": "Search",
+    "filter": "Filter",
+    "sort": "Sort",
+    "all": "All",
+    "none": "None",
+    "yes": "Yes",
+    "no": "No",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "submit": "Submit",
+    "learnMore": "Learn More",
+    "viewAll": "View All",
+    "addToCart": "Add to Cart",
+    "buyNow": "Buy Now",
+    "outOfStock": "Out of Stock",
+    "inStock": "In Stock"
+  },
+  "hero": {
+    "eyebrow": "Bespoke Wine Experience",
+    "title": "Craft Your",
+    "titleHighlight": "Signature Wine",
+    "subtitle": "From grape selection to label design, create a wine that is uniquely yours. Handcrafted in prestigious vineyards, delivered worldwide.",
+    "cta": "Begin Your Journey",
+    "watchVideo": "Watch Our Story",
+    "scroll": "Scroll"
+  },
+  "philosophy": {
+    "eyebrow": "Our Philosophy",
+    "title": "Where Tradition",
+    "titleHighlight": "Meets Innovation",
+    "description": "At Vintedge, we believe that wine is more than a beverage—it's a canvas for self-expression. Our master sommeliers work with you to craft a wine that reflects your unique palate, style, and story.",
+    "cta": "Discover Our Story",
+    "years": "Years of Excellence"
+  },
+  "process": {
+    "eyebrow": "The Experience",
+    "title": "Four Steps to",
+    "titleHighlight": "Your Perfect Wine",
+    "step1": {
+      "title": "Select Your Wine",
+      "description": "Choose from our curated selection of premium varietals from renowned vineyards worldwide."
+    },
+    "step2": {
+      "title": "Design Your Label",
+      "description": "Create a bespoke label with our intuitive editor. Upload your artwork or use our AI assistant."
+    },
+    "step3": {
+      "title": "Customize Packaging",
+      "description": "Select bottle shape, cork type, capsule color, and premium gift packaging options."
+    },
+    "step4": {
+      "title": "Worldwide Delivery",
+      "description": "Your custom wine is carefully packaged and shipped to your doorstep anywhere in the world."
+    },
+    "cta": "Start Creating"
+  },
+  "collection": {
+    "eyebrow": "Our Collection",
+    "title": "Featured",
+    "titleHighlight": "Selections",
+    "viewAll": "View All Wines",
+    "quickView": "Quick View",
+    "from": "From"
+  },
+  "testimonials": {
+    "quote1": "The level of customization is extraordinary. My wedding wine was exactly what I envisioned—elegant, personal, and absolutely delicious.",
+    "author1": "Sarah Mitchell",
+    "role1": "New York, USA",
+    "quote2": "Vintedge transformed our corporate gifting. Our clients were genuinely impressed by the attention to detail and quality.",
+    "author2": "James Chen",
+    "role2": "CEO, Pacific Holdings",
+    "quote3": "From selection to delivery, every step was seamless. The AI label designer helped me create something truly unique.",
+    "author3": "Maria González",
+    "role3": "Buenos Aires, Argentina"
+  },
+  "cta": {
+    "eyebrow": "Begin Today",
+    "title": "Ready to Create",
+    "titleHighlight": "Something Extraordinary?",
+    "description": "Join thousands of wine enthusiasts who have discovered the art of personalized wine. Your signature vintage awaits.",
+    "primaryCta": "Explore Collection",
+    "secondaryCta": "Contact Us"
+  },
+  "footer": {
+    "tagline": "Crafting bespoke wine experiences for discerning palates worldwide. Every bottle tells your unique story.",
+    "explore": "Explore",
+    "company": "Company",
+    "support": "Support",
+    "legal": "Legal",
+    "copyright": "© 2024 Vintedge. All rights reserved. Must be 21+ to purchase.",
+    "newsletter": {
+      "title": "Join Our Community",
+      "description": "Receive exclusive offers and pairing tips.",
+      "placeholder": "Your email",
+      "button": "Subscribe"
+    }
+  },
+  "wines": {
+    "title": "Our Collection",
+    "subtitle": "Discover exceptional wines from the world's most prestigious regions.",
+    "filters": {
+      "all": "All",
+      "red": "Red",
+      "white": "White",
+      "rose": "Rosé",
+      "sparkling": "Sparkling",
+      "region": "Region",
+      "price": "Price",
+      "clearFilters": "Clear Filters"
+    },
+    "sort": {
+      "featured": "Featured",
+      "priceAsc": "Price: Low to High",
+      "priceDesc": "Price: High to Low",
+      "newest": "Newest"
+    },
+    "noResults": "No wines found with selected filters.",
+    "loading": "Loading wines..."
+  },
+  "auth": {
+    "signIn": {
+      "title": "Welcome Back",
+      "subtitle": "Sign in to continue your experience.",
+      "email": "Email Address",
+      "password": "Password",
+      "forgotPassword": "Forgot password?",
+      "noAccount": "Don't have an account?",
+      "signUp": "Sign up",
+      "or": "or continue with",
+      "google": "Google"
+    },
+    "signUp": {
+      "title": "Create Your Account",
+      "subtitle": "Join Vintedge and start your journey.",
+      "name": "Full Name",
+      "email": "Email Address",
+      "password": "Password",
+      "confirmPassword": "Confirm Password",
+      "hasAccount": "Already have an account?",
+      "signIn": "Sign in",
+      "terms": "By signing up, you agree to our",
+      "termsLink": "Terms of Service",
+      "and": "and",
+      "privacyLink": "Privacy Policy"
+    }
+  },
+  "checkout": {
+    "title": "Checkout",
+    "orderSummary": "Order Summary",
+    "shipping": "Shipping Information",
+    "payment": "Payment Information",
+    "total": "Total",
+    "subtotal": "Subtotal",
+    "shippingCost": "Shipping",
+    "tax": "Tax",
+    "placeOrder": "Place Order",
+    "processing": "Processing...",
+    "success": "Order Placed!",
+    "successMessage": "Thank you for your purchase. You will receive a confirmation email shortly.",
+    "emptyCart": "Your cart is empty"
+  }
+}

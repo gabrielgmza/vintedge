@@ -1,0 +1,183 @@
+{
+  "common": {
+    "home": "Inicio",
+    "wines": "Vinos",
+    "about": "Nosotros",
+    "contact": "Contacto",
+    "customize": "Personalizar",
+    "cart": "Carrito",
+    "account": "Mi Cuenta",
+    "signIn": "Iniciar Sesión",
+    "signUp": "Registrarse",
+    "signOut": "Cerrar Sesión",
+    "loading": "Cargando...",
+    "error": "Error",
+    "success": "Éxito",
+    "cancel": "Cancelar",
+    "save": "Guardar",
+    "delete": "Eliminar",
+    "edit": "Editar",
+    "view": "Ver",
+    "search": "Buscar",
+    "filter": "Filtrar",
+    "sort": "Ordenar",
+    "all": "Todos",
+    "none": "Ninguno",
+    "yes": "Sí",
+    "no": "No",
+    "back": "Volver",
+    "next": "Siguiente",
+    "previous": "Anterior",
+    "submit": "Enviar",
+    "learnMore": "Saber Más",
+    "viewAll": "Ver Todos",
+    "addToCart": "Añadir al Carrito",
+    "buyNow": "Comprar Ahora",
+    "outOfStock": "Agotado",
+    "inStock": "En Stock"
+  },
+  "hero": {
+    "eyebrow": "Experiencia de Vino Premium",
+    "title": "Crea Tu",
+    "titleHighlight": "Vino Único",
+    "subtitle": "Desde la selección de la uva hasta el diseño de la etiqueta, crea un vino que es únicamente tuyo. Elaborado en viñedos prestigiosos, entregado en todo el mundo.",
+    "cta": "Comenzar Tu Viaje",
+    "watchVideo": "Ver Nuestra Historia",
+    "scroll": "Descubre"
+  },
+  "philosophy": {
+    "eyebrow": "Nuestra Filosofía",
+    "title": "Donde la Tradición",
+    "titleHighlight": "Se Une a la Innovación",
+    "description": "En Vintedge, creemos que el vino es más que una bebida—es un lienzo para la autoexpresión. Nuestros maestros sommeliers trabajan contigo para crear un vino que refleje tu paladar, estilo e historia únicos.",
+    "cta": "Descubre Nuestra Historia",
+    "years": "Años de Excelencia"
+  },
+  "process": {
+    "eyebrow": "La Experiencia",
+    "title": "Cuatro Pasos Hacia",
+    "titleHighlight": "Tu Vino Perfecto",
+    "step1": {
+      "title": "Selecciona Tu Vino",
+      "description": "Elige de nuestra selección curada de varietales premium de viñedos renombrados en todo el mundo."
+    },
+    "step2": {
+      "title": "Diseña Tu Etiqueta",
+      "description": "Crea una etiqueta única con nuestro editor intuitivo. Sube tu arte o usa nuestro asistente de IA."
+    },
+    "step3": {
+      "title": "Personaliza el Empaque",
+      "description": "Selecciona forma de botella, tipo de corcho, color de cápsula y opciones de empaque premium."
+    },
+    "step4": {
+      "title": "Envío Mundial",
+      "description": "Tu vino personalizado es cuidadosamente empacado y enviado a tu puerta en cualquier parte del mundo."
+    },
+    "cta": "Comenzar a Crear"
+  },
+  "collection": {
+    "eyebrow": "Nuestra Colección",
+    "title": "Selecciones",
+    "titleHighlight": "Destacadas",
+    "viewAll": "Ver Todos los Vinos",
+    "quickView": "Vista Rápida",
+    "from": "Desde"
+  },
+  "testimonials": {
+    "quote1": "El nivel de personalización es extraordinario. El vino de mi boda fue exactamente lo que imaginé—elegante, personal y absolutamente delicioso.",
+    "author1": "María García",
+    "role1": "Nueva York, EE.UU.",
+    "quote2": "Vintedge transformó nuestros regalos corporativos. Nuestros clientes quedaron genuinamente impresionados por la atención al detalle y la calidad.",
+    "author2": "Carlos Mendoza",
+    "role2": "CEO, Pacific Holdings",
+    "quote3": "Desde la selección hasta la entrega, cada paso fue impecable. El diseñador de etiquetas con IA me ayudó a crear algo verdaderamente único.",
+    "author3": "Ana Martínez",
+    "role3": "Buenos Aires, Argentina"
+  },
+  "cta": {
+    "eyebrow": "Comienza Hoy",
+    "title": "¿Listo para Crear",
+    "titleHighlight": "Algo Extraordinario?",
+    "description": "Únete a miles de entusiastas del vino que han descubierto el arte del vino personalizado. Tu añada exclusiva te espera.",
+    "primaryCta": "Explorar Colección",
+    "secondaryCta": "Contactarnos"
+  },
+  "footer": {
+    "tagline": "Creando experiencias de vino únicas para paladares exigentes en todo el mundo. Cada botella cuenta tu historia única.",
+    "explore": "Explorar",
+    "company": "Empresa",
+    "support": "Soporte",
+    "legal": "Legal",
+    "copyright": "© 2024 Vintedge. Todos los derechos reservados. Debes tener 21+ para comprar.",
+    "newsletter": {
+      "title": "Únete a Nuestra Comunidad",
+      "description": "Recibe ofertas exclusivas y consejos de maridaje.",
+      "placeholder": "Tu correo electrónico",
+      "button": "Suscribirse"
+    }
+  },
+  "wines": {
+    "title": "Nuestra Colección",
+    "subtitle": "Descubre vinos excepcionales de las regiones más prestigiosas del mundo.",
+    "filters": {
+      "all": "Todos",
+      "red": "Tintos",
+      "white": "Blancos",
+      "rose": "Rosados",
+      "sparkling": "Espumantes",
+      "region": "Región",
+      "price": "Precio",
+      "clearFilters": "Limpiar Filtros"
+    },
+    "sort": {
+      "featured": "Destacados",
+      "priceAsc": "Precio: Menor a Mayor",
+      "priceDesc": "Precio: Mayor a Menor",
+      "newest": "Más Recientes"
+    },
+    "noResults": "No se encontraron vinos con los filtros seleccionados.",
+    "loading": "Cargando vinos..."
+  },
+  "auth": {
+    "signIn": {
+      "title": "Bienvenido de Nuevo",
+      "subtitle": "Inicia sesión para continuar tu experiencia.",
+      "email": "Correo Electrónico",
+      "password": "Contraseña",
+      "forgotPassword": "¿Olvidaste tu contraseña?",
+      "noAccount": "¿No tienes cuenta?",
+      "signUp": "Regístrate",
+      "or": "o continúa con",
+      "google": "Google"
+    },
+    "signUp": {
+      "title": "Crea Tu Cuenta",
+      "subtitle": "Únete a Vintedge y comienza tu viaje.",
+      "name": "Nombre Completo",
+      "email": "Correo Electrónico",
+      "password": "Contraseña",
+      "confirmPassword": "Confirmar Contraseña",
+      "hasAccount": "¿Ya tienes cuenta?",
+      "signIn": "Inicia Sesión",
+      "terms": "Al registrarte, aceptas nuestros",
+      "termsLink": "Términos y Condiciones",
+      "and": "y",
+      "privacyLink": "Política de Privacidad"
+    }
+  },
+  "checkout": {
+    "title": "Finalizar Compra",
+    "orderSummary": "Resumen del Pedido",
+    "shipping": "Información de Envío",
+    "payment": "Información de Pago",
+    "total": "Total",
+    "subtotal": "Subtotal",
+    "shippingCost": "Envío",
+    "tax": "Impuestos",
+    "placeOrder": "Realizar Pedido",
+    "processing": "Procesando...",
+    "success": "¡Pedido Realizado!",
+    "successMessage": "Gracias por tu compra. Recibirás un correo de confirmación pronto.",
+    "emptyCart": "Tu carrito está vacío"
+  }
+}
